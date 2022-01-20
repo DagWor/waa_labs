@@ -1,0 +1,15 @@
+type Account{
+    accountNumber:Float!
+    accountHolder:String!
+    balance:Float!
+}
+
+type Query{
+    account(accountNumber:String!):Account
+}
+
+type Mutation{
+    createAccount(accountNumber:String!,accountHolder:String!,balance:Float!):Account!
+    deposit(accountNumber:String!,amount:Float!):Boolean
+    withdraw(accountNumber:String!,amount:Float!):Boolean
+}

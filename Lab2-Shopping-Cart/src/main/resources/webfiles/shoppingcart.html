@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <link th:href="@{/styles/main.css}" rel="stylesheet">
+</head>
+<body>
+<h1>Your shopping cart</h1>
+<table>
+    <tr>
+        <th>Quantity</th>
+        <th>Product number</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Total</th>
+    </tr>
+    <tr th:each="cartItem: ${cartItems}">
+        <td th:text="${cartItem.quantity}">quantity</td>
+        <td th:text="${cartItem.product.productNo}">productNumber</td>
+        <td th:text="${cartItem.product.productName}">productName</td>
+        <td th:text="${cartItem.product.price}">price</td>
+        <td th:text="${cartItem.product.price * cartItem.quantity}">total</td>
+        <td>
+            <form action="removefromcart" method="post">
+                <button type="submit" name="productNumber" th:value="${cartItem.product.productNo}">
+                    Remove
+                </button>
+            </form>
+        </td>
+    </tr>
+</table>
+<br/>
+
+<h1>Total:</h1>
+<h1 th:text="${total}">total</h1>
+<br/>
+<form action="products" method="get">
+    <button type="submit" name="showProduct">Show product</button>
+</form>
+
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Calculator Application</title>
+    <script type="text/javascript">
+        let ws;
+
+        function connect() {
+            ws = new WebSocket("ws://localhost:8080/simple-calculator");
+            ws.onmessage = function (event) {
+                showData(event.data);
+            }
+            ws.onclose = function () {
+                showData("Connection closed!");
+            };
+            expHistory.innerHTML = "";
+        }
+
+        function disconnect() {
+            if (ws != null) {
+                ws.close();
+            }
+        }
+
+        function sendData() {
+            let text = document.getElementById("expression").value;
+            ws.send(text);
+        }
+
+        function showData(message) {
+            expHistory.innerHTML += "<br/>" + message;
+        }
+    </script>
+</head>
+<body>
+<div>
+    <div>
+        <div>
+            <h2>Simple Calculator Application</h2>
+            <div style="margin:10px 0">
+                <button id="connect" type="button" onclick="connect();">Connect</button>
+                <button id="disconnect" type="button" onclick="disconnect();">Disconnect</button>
+            </div>
+            <table id="chat">
+                <tbody id="expHistory">
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <div>
+                <textarea id="expression" placeholder="Write the expression here..." required></textarea>
+            </div>
+            <button id="send" type="button" onclick="sendData();">Evaluate Expression</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
